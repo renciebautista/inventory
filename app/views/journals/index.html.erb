@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Journals</h1>
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Location</th>
+        <th>SKU Code</th>
+        <th>Product</th>
+        <th>Journal type</th>
+        <th>Qty</th>
+        <th>Date Created</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @journals.each do |journal| %>
+        <tr>
+          <td><%= journal.location.name %></td>
+          <td><%= journal.product.sku %></td>
+          <td><%= journal.product.name %></td>
+          <td><%= journal.journal_type.name %></td>
+          <td><%= journal.qty %></td>
+          <td><%= journal.created_at %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+<br>
+
+<%= link_to 'New Journal', new_journal_path %>

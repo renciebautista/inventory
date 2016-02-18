@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Stocks</h1>
+
+<div class="table-responsive">
+  <table class="table table-bordered"> 
+    <thead>
+      <tr>
+        <th>SKU Code</th>
+        <th>Product</th>
+        <th>Qty</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @stocks.each do |stock| %>
+        <tr>
+          <td><%= stock.sku %></td>
+          <td><%= stock.product_desc %></td>
+          <td><%= stock.qty %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+<br>
+
+<%= link_to 'New Stock', new_stock_path %>

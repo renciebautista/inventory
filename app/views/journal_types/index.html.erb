@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Journal Types</h1>
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Effect</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @journal_types.each do |journal_type| %>
+        <tr>
+          <td><%= journal_type.name %></td>
+          <td><%= journal_type.effect %></td>
+          <td><%= link_to 'Show', journal_type %></td>
+          <td><%= link_to 'Edit', edit_journal_type_path(journal_type) %></td>
+          <td><%= link_to 'Destroy', journal_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<br>
+
+<%= link_to 'New Journal type', new_journal_type_path %>
