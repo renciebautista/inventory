@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218135627) do
+ActiveRecord::Schema.define(version: 20160219153141) do
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
 
   create_table "journal_types", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -41,13 +49,25 @@ ActiveRecord::Schema.define(version: 20160218135627) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.string   "sku",        limit: 255
-    t.string   "name",       limit: 255
+    t.integer  "category_id", limit: 4
+    t.string   "sku",         limit: 255
+    t.string   "name",        limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
+  add_index "products", ["sku"], name: "index_products_on_sku", using: :btree
+
+  create_table "stock_requests", force: :cascade do |t|
+    t.integer  "product_id", limit: 4
+    t.string   "remarks",    limit: 255
+    t.integer  "qty",        limit: 4
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
 
-  add_index "products", ["sku"], name: "index_products_on_sku", using: :btree
+  add_index "stock_requests", ["product_id"], name: "index_stock_requests_on_product_id", using: :btree
 
   create_table "stocks", force: :cascade do |t|
     t.integer  "location_id", limit: 4
@@ -63,6 +83,8 @@ ActiveRecord::Schema.define(version: 20160218135627) do
   add_foreign_key "journals", "journal_types"
   add_foreign_key "journals", "locations"
   add_foreign_key "journals", "products"
+  add_foreign_key "products", "categories"
+  add_foreign_key "stock_requests", "products"
   add_foreign_key "stocks", "locations"
   add_foreign_key "stocks", "products"
 end

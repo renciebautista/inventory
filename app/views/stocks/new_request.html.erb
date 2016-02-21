@@ -1,0 +1,36 @@
+<h1>Request Stock</h1>
+
+<%= form_for @request, url: request_stock_path(@stock) do |f| %>
+  <% if @request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@request.errors.count, "error") %> prohibited this request from being saved:</h2>
+
+      <ul>
+      <% @request.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :product_id %><br>
+    <%= f.number_field :product_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :remarks %><br>
+    <%= f.text_area :remarks %>
+  </div>
+
+  <div class="field">
+    <%= f.label :qty %><br>
+    <%= f.number_field :qty %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Request Stock' %>
+  </div>
+<% end %>
+
+
+<%= link_to 'Back', stocks_path %>

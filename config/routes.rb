@@ -1,9 +1,27 @@
 Rails.application.routes.draw do
+
+  root 'stocks#index'
+  
+  resources :categories
   resources :journals
   resources :journal_types
-  resources :stocks
+ 
   resources :locations
   resources :products
+
+ 
+  resources :stocks do
+    member do
+      get 'request', :action => 'new_request'
+      post 'request', :action => 'create_request'
+    end
+  end
+
+  resources :stock_requests
+
+  resources :masterfiles do
+    collection { post :import }
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

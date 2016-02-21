@@ -1,4 +1,5 @@
 class Product < ActiveRecord::Base
-	validates :sku, :name, presence: true
-	validates :sku, uniqueness: true
+	belongs_to :category
+	validates :name, presence: true
+	# validates :sku, uniqueness: true
 end

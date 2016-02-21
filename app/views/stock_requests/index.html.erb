@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Stocks</h1>
+<h1>Listing Stock Requests</h1>
 
 <div class="table-responsive">
   <table class="table table-bordered"> 
@@ -8,18 +8,20 @@
       <tr>
         <th>SKU Code</th>
         <th>Product</th>
+        <th>Remarks</th>
         <th>Qty</th>
-        <th></th>
+        <th>Stock On Hand</th>
       </tr>
     </thead>
 
     <tbody>
-      <% @stocks.each do |stock| %>
+      <% @requests.each do |request| %>
         <tr>
-          <td><%= stock.sku %></td>
-          <td><%= stock.product_desc %></td>
-          <td><%= stock.qty %></td>
-          <td><%= link_to 'Request', request_stock_path(stock.product_id) %></td>
+          <td><%= request.product.sku %></td>
+          <td><%= request.product.name %></td>
+          <td><%= request.remarks %></td>
+          <td><%= request.qty %></td>
+          <td>1</td>
         </tr>
       <% end %>
     </tbody>

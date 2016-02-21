@@ -1,11 +1,11 @@
 class StocksController < ApplicationController
-  before_action :set_stock, only: [:show, :edit, :update, :destroy]
+  before_action :set_stock, only: [:show, :edit, :update, :destroy, :new_request]
 
   # GET /stocks
   # GET /stocks.json
   def index
     @stocks = Stock.joins(:product)
-                    .select("products.sku,products.name as product_desc, SUM(stocks.qty) as qty")
+                    .select("stocks.product_id,products.sku,products.name as product_desc, SUM(stocks.qty) as qty")
                     .group("stocks.product_id")
   end
 
@@ -53,6 +53,7 @@ class StocksController < ApplicationController
     end
   end
 
+
   # DELETE /stocks/1
   # DELETE /stocks/1.json
   def destroy
@@ -60,6 +61,24 @@ class StocksController < ApplicationController
     respond_to do |format|
       format.html { redirect_to stocks_url, notice: 'Stock was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def new_request
+    @request = StockRequest.new
+  end
+
+  def create_request
+    @request = StockRequest.new(request_params)
+
+    respond_to do |format|
+      if @request.save
+        format.html { redirect_to stocks_path, notice: 'Stock request was successfully created.' }
+        format.json { render :show, status: :created, location: @stock }
+      else
+        format.html { render :new }
+        format.json { render json: @stock.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -72,5 +91,10 @@ class StocksController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def stock_params
       params.require(:stock).permit(:location_id, :product_id, :qty)
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def request_params
+      params.require(:stock_request).permit(:product_id, :remarks, :qty)
     end
 end

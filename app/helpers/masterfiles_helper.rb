@@ -1,0 +1,2 @@
+module MasterfilesHelper
+end
